@@ -152,3 +152,7 @@ It checks both appearances, keyboard navigation, search, focus trapping, preserv
 - No remote event streaming, automatic project-to-task inference, persistence, task dispatch, approval, cancellation, or task-wide acceptance engine is included.
 
 See [architecture](docs/architecture.md), [ADRs](docs/adr/0001-read-only-companion.md), [morphdom decision](docs/adr/0002-incremental-dom-updates.md), and [verification](docs/verification.md). Work is tracked in Beans; `beans list` shows the delivery task and follow-ups. Dependencies are pinned with a lockfile and weekly Dependabot checks.
+
+## License
+
+[MIT](LICENSE) · Copyright (c) 2026 Viktor Gamov.
