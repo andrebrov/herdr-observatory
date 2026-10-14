@@ -2,6 +2,8 @@
 
 ## 0.1.0 — 2026-10-14
 
+- Add a compiled executable and GitHub source runner via npm exec, with local build/session connection instructions and self-contained AGENTS.md guidance (ADR 0003).
+
 - Add a native Glimpse companion with project/session selectors, agent activity, assignment board, event timeline, attention, provenance, and a safe evidence viewer.
 - Integrate teamlead state, supervision, attention, Herdr snapshots, Markdown ledger context, and Beans issues without mutating owner state.
 - Require explicit structured assignment acceptance and matching current evidence receipts. Preserve free-text resolutions as unclassified outcomes.

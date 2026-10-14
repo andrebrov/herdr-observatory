@@ -4,42 +4,97 @@ A local, observational dashboard for Herdr coding sessions, running in a native 
 
 ![Native Glimpse dashboard](docs/screenshots/native-overview.png)
 
-## Launch
+## Prerequisites
 
-Requires [Node.js 22+](https://nodejs.org/), macOS, and existing [Xcode Command Line Tools](https://developer.apple.com/xcode/resources/) for Glimpse's Swift host. Development was verified on macOS with Node 26.11.1 and Herdr 0.9.4. No cloud account or credentials are needed.
+Use [Node.js 22+ with npm](https://nodejs.org/), macOS, and an existing [Xcode Command Line Tools](https://developer.apple.com/xcode/resources/) installation for Glimpse's Swift host. Git is needed for GitHub source installs. Development was verified on macOS with Node 26.11.1 and Herdr 0.9.4. No cloud account or credentials are needed for the demo. Live observation requires an installed [Herdr](https://herdr.dev/) CLI and an already-running local session.
+
+## Run without a checkout
+
+Once this repository is available on GitHub, run the demo from any directory:
 
 ```sh
+npm exec --yes --package='github:gAmUssA/herdr-observatory#main' -- \
+  herdr-observatory --demo
+```
+
+npm fetches the source into its execution cache, installs the build dependencies, runs the prepare/build lifecycle, and exposes the compiled executable. You do not need to clone the repository yourself or install a global command. First launch needs network access and can take longer while Glimpse prepares its native host. The repository remains marked private for npm publishing; this command uses GitHub directly and needs no npm registry release. Replace `main` with a known commit SHA or tag to pin the source revision.
+
+The GitHub command requires the repository and selected ref to be accessible. Before the initial push, use the local build instructions below. npm's [execution](https://docs.npmjs.com/cli/v11/commands/npm-exec/) and [lifecycle](https://docs.npmjs.com/cli/v11/using-npm/scripts/) documentation describes the cache and source preparation behavior.
+
+Close the window or press Ctrl-C in the launching terminal to stop. Demo data is synthetic, uses a fixed observation clock, and never calls Herdr. Restarting restores the fixture view; the dashboard does not modify fixtures.
+
+## Build and run locally
+
+```sh
+git clone https://github.com/gAmUssA/herdr-observatory.git
+cd herdr-observatory
 npm ci
-npm run demo
+npm run build
+npm run start:built -- --demo
 ```
 
-Close the window or press Ctrl-C in the launching terminal to stop. Demo data is synthetic, uses a fixed observation clock, and never calls Herdr. Restarting restores the same fixture view; the dashboard does not modify fixtures.
+`npm ci` also builds through the prepare lifecycle. The explicit build command is useful after editing source. It compiles production TypeScript to gitignored `dist/`; the executable, UI, and fixtures resolve relative to the installation instead of your current directory. The built runner uses Node directly and does not need tsx at runtime.
 
-If Glimpse's installer skipped native compilation, run `npm rebuild glimpseui` with the existing Swift toolchain. No machine-level tools are installed by this repository.
+For development, `npm run demo` runs TypeScript source through tsx, and `npm start -- ...` accepts the same live-data flags. If Glimpse's installer skipped native compilation, run `npm rebuild glimpseui` with the existing Swift toolchain. If your npm installation blocks dependency lifecycle scripts, review/allow the Glimpse build using that npm version's script policy, then rebuild; the dashboard does not change global npm policy or install machine-level tools.
 
-For actual data, supply the project and the teamlead state file explicitly:
+## Connect to a running Herdr session
+
+First inspect existing sessions and confirm the target is running:
 
 ```sh
-npm start -- \
-  --project /absolute/path/to/project \
-  --state /absolute/path/to/state.json \
+herdr --version
+herdr session list
+herdr --session default api snapshot
+```
+
+Use the exact existing session name from the list. These commands inspect Herdr; the dashboard does not start, attach, or provision a session. In these instructions, Herdr is the CLI executable (`herdr`, not `herd`).
+
+From any directory, after the GitHub repository is available:
+
+```sh
+npm exec --yes --package='github:gAmUssA/herdr-observatory#main' -- \
+  herdr-observatory \
+  --project /absolute/path/to/your-project \
+  --state "$HOME/.local/state/teamlead/state.json" \
+  --session default
+```
+
+Or from a locally built checkout:
+
+```sh
+npm run start:built -- \
+  --project /absolute/path/to/your-project \
+  --state "$HOME/.local/state/teamlead/state.json" \
+  --session default
+```
+
+Set `--project` to the code project whose panes you want to observe, not necessarily the Observatory checkout. Set `--state` to the same state file your teamlead uses. The default teamlead location is `$XDG_STATE_HOME/teamlead/state.json`, or `~/.local/state/teamlead/state.json` when XDG_STATE_HOME is unset. If the lead selected `--state FILE`, use that file instead. Observatory derives the attention and supervision sidecars from the selected state path. Do not initialize or migrate owner state to make the dashboard work; missing files are visible as unavailable sources, while live panes can still be observed.
+
+Optional evidence and filtering flags:
+
+| Flag                                        | Purpose                                                                              |
+| ------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `--task EXACT_TASK_ID`                      | Limit the selected shared state history to one task.                                 |
+| `--ledger /absolute/path/to/TASK-LEDGER.md` | Show narrative context without treating it as status.                                |
+| `--evidence-root /absolute/path/to/reports` | Permit reports outside the project and state directory. Repeat for additional roots. |
+| `--project PATH`, `--session NAME`          | Repeat to populate the project/session selectors.                                    |
+| `--snapshot`                                | Print normalized JSON and exit without opening a window.                             |
+
+Project selection scopes live panes and Beans issues. The explicitly supplied state file defines the assignment and attention scope; shared history can span projects and sessions. Launch separate windows for different state files. The UI exposes source paths and does not guess project ownership from task names.
+
+Observations refresh every five seconds. Open **Sources** to check failures, modification times, and provenance. If live status is unavailable, rerun the exact `herdr --session NAME api snapshot` command, verify the CLI is on PATH, and choose an existing running local session. If evidence is unavailable, check the file and explicitly add its containing report root. Unclassified resolutions mean the owner supplied free text; they are not automatically accepted.
+
+A headless connection check from a built checkout:
+
+```sh
+node bin/herdr-observatory.mjs \
+  --project /absolute/path/to/your-project \
+  --state "$HOME/.local/state/teamlead/state.json" \
   --session default \
-  --ledger /absolute/path/to/reports/TASK-LEDGER.md \
-  --evidence-root /absolute/path/to/reports
+  --snapshot
 ```
 
-Use an existing Herdr session name. The application calls only `herdr --session NAME api snapshot` during observation. It never launches or attaches a session. `--ledger` and `--evidence-root` are optional; repeat evidence roots for additional report directories.
-
-Repeat `--project` and `--session` to populate the selectors. Project selection scopes live panes and Beans issues. The explicitly supplied state file defines the assignment and attention scope; shared teamlead history can span projects and sessions. Use `--task EXACT_TASK_ID` to limit that shared history to a particular task. Launch separate windows for different state files. The UI exposes source paths and does not guess project ownership from task names.
-
-Inspect the same normalized data without opening a window:
-
-```sh
-npm start -- --project /absolute/path/to/project --state /absolute/path/to/state.json --snapshot
-npm run demo -- --snapshot
-```
-
-Use `npx tsx src/cli.ts ... --snapshot` for JSON-only stdout without npm's script banner.
+This prints JSON-only stdout. `npm run start:built` adds npm's script banner. Passive observation does not acknowledge events or alter supervision. **Focus pane** is explicit and can mark a completion seen; no other agent control is exposed.
 
 ## What the dashboard shows
 
@@ -69,9 +124,10 @@ The owner permits free-text resolution outcomes. A sentence containing “accept
 
 ```sh
 npm run verify
+npm run package:check
 ```
 
-The test suite covers normalization, chronological ordering, freshness, explicit acceptance, changed evidence, schema failures, attention replay, session mismatch, path and symlink boundaries, inert content, image signatures, bridge serialization, and bounded polling. Tests use temporary files and controlled clocks.
+The test suite covers normalization, chronological ordering, freshness, explicit acceptance, changed evidence, schema failures, attention replay, session mismatch, path and symlink boundaries, inert content, image signatures, bridge serialization, and bounded polling. Tests use temporary files and controlled clocks. The packaging smoke check packs the compiled CLI, runs it through npm exec from an empty directory, verifies all five demo states and UI asset resolution, rejects missing live paths, and checks that development artifacts are excluded.
 
 The browser interaction check runs the exact HTML and installed local morphdom asset used by Glimpse:
 

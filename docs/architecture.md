@@ -42,3 +42,7 @@ A reader cannot prove the current source is globally consistent during an owner'
 - **Glimpse:** `open(html, {width, height, title})`; incoming `message`, `closed`, and `error` events; outgoing fixed `win.send(js)` calls. UI `ready` establishes the bridge before polling starts.
 
 This repository has no public server or durable writer schema. The owner schemas remain authoritative. Supporting a new owner version requires a reader update and regression fixtures, never in-place migration.
+
+## Build and distribution
+
+The source entry point runs through tsx during development. `npm run build` compiles production modules to gitignored dist/; bin/herdr-observatory.mjs calls the compiled CLI. npm prepare builds on packing and Git source installation. The npm files allowlist carries the executable, compiled modules, trusted UI, and portable synthetic fixtures. Runtime paths use the installed package root, so npm exec works from an unrelated directory. No global install or npm registry publication is required. ADR 0003 records this boundary; `npm run package:check` exercises the prepared package from an empty directory.

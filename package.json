@@ -15,8 +15,12 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "screenshots": "tsx scripts/screenshots.ts",
-    "lint": "eslint src scripts eslint.config.mjs",
-    "verify": "npm run format:check && npm run lint && npm run check && npm test"
+    "lint": "eslint src scripts bin eslint.config.mjs",
+    "verify": "npm run format:check && npm run lint && npm run check && npm test",
+    "build": "tsc -p tsconfig.build.json",
+    "prepare": "npm run build",
+    "start:built": "node bin/herdr-observatory.mjs",
+    "package:check": "tsx scripts/package-smoke.ts"
   },
   "dependencies": {
     "glimpseui": "0.8.1",
@@ -32,5 +36,19 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.2",
     "vitest": "5.0.4"
+  },
+  "bin": {
+    "herdr-observatory": "bin/herdr-observatory.mjs"
+  },
+  "files": [
+    "bin/",
+    "dist/",
+    "ui/",
+    "fixtures/demo/",
+    "CHANGELOG.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gAmUssA/herdr-observatory.git"
   }
 }

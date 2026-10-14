@@ -47,3 +47,11 @@ An expected red run temporarily removed the evidence-digest predicate. The chang
 Tests demonstrated partial JSON and unsupported schemas produce source errors without overwriting bytes; missing sources do not invent records; changed report bytes withdraw acceptance; restoring original bytes restores the recorded assignment classification; unknown resolution schemas cannot grant acceptance; native-session mismatch cannot inherit old work; symlink escapes and executable evidence are refused; malformed image signatures cannot render; and polling is bounded, nonoverlapping, and stops cleanly.
 
 The native `Focus pane` command and external macOS `open` action were not executed against the operator's existing sessions/files during validation. Their command guards and evidence viewer paths were exercised locally. Task-wide release acceptance, actual test-result reproduction, process-identity verification for watchers, and cross-platform native hosts remain outside the verified claim.
+
+## Compiled and no-checkout runner
+
+`npm run build` produced the compiled Node CLI. `npm run start:built -- --demo` opened the native window and confirmed the local bridge connection. `npm run package:check` packed 18 runtime files, installed the tarball through npm exec in an isolated cache, and ran from an empty consumer directory. It verified all five fixture stages, zero diagnostics, help output, rejection of missing live paths, and local presentation/morphdom resolution from the installed package. The package excluded source, tests, Beans metadata, screenshots, and AGENTS.md.
+
+A second isolated npm exec check installed the committed, unbuilt source through a local Git URL. npm ran source preparation and built the CLI before executing all five demo stages. Generated dist/ files remain uncommitted.
+
+The documented GitHub runner targets gAmUssA/herdr-observatory. That public endpoint has not been exercised before publication; local package installation is verified, and remote accessibility is a prerequisite rather than a claimed result.

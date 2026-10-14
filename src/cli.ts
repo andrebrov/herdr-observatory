@@ -59,11 +59,11 @@ export const bridgeCall = (
   payload: unknown,
 ) =>
   `window.observatory.${method}(${JSON.stringify(payload).replaceAll("<", "\\u003c").replaceAll("\u2028", "\\u2028").replaceAll("\u2029", "\\u2029")});`;
-async function main() {
+export async function main() {
   const config = parseConfig(process.argv.slice(2));
   if (config.help) {
     console.log(
-      `Herdr Observatory · observation only\n\nnpm run demo\nnpm start -- --project PATH --state FILE [--session NAME] [--ledger FILE]\n\nRepeat --project / --session to populate selectors. --task ID limits shared state.\n--evidence-root PATH permits explicit external report roots.\n--snapshot prints normalized JSON without opening a window.\n--demo uses synthetic fixtures and never calls Herdr.\nClose the window or press Ctrl-C to stop. Explicit focus marks completions seen.`,
+      `Herdr Observatory · observation only\n\nherdr-observatory --demo\nherdr-observatory --project PATH --state FILE [--session NAME] [--ledger FILE]\n\nRepeat --project / --session to populate selectors. --task ID limits shared state.\n--evidence-root PATH permits explicit external report roots.\n--snapshot prints normalized JSON without opening a window.\n--demo uses synthetic fixtures and never calls Herdr.\nClose the window or press Ctrl-C to stop. Explicit focus marks completions seen.`,
     );
     return;
   }
