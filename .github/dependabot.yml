@@ -4,3 +4,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    # typescript-eslint 8.71.2 supports TypeScript <6.1.0.
+    # Revisit this major-update deferral when its peer range supports TypeScript 7.
+    ignore:
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
