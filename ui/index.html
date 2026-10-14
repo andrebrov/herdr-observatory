@@ -994,6 +994,352 @@
         background: transparent;
         color: var(--muted);
       }
+      /* Star Trek LCARS themes: one frame, eleven palettes (lcars-<palette>).
+         Each palette has seven slots; --slot-on is black or white by WCAG contrast.
+         Local fonts only (CSP font-src 'none'). */
+      :root[data-theme^="lcars"] {
+        color-scheme: dark;
+        --bg: #000;
+        --panel: #0b0b12;
+        --sidebar: #000;
+        --line: #33334d;
+        --text: #f3e3c3;
+        --muted: #b9a7d6;
+        --accent: var(--lo);
+        --accent-bg: #2b1a00;
+        --amber: var(--lg);
+        --amber-bg: #3a2a0d;
+        --red: #ff7a7a;
+        --red-bg: #3a1414;
+        --blue: var(--lb);
+        --blue-bg: #1a2140;
+        --shadow: none;
+      }
+      /* Body text stays regular width; only headings and bars use condensed type. */
+      :root[data-theme^="lcars"]
+        :is(
+          h1,
+          h2,
+          .eyebrow,
+          .nav button,
+          .column-title,
+          .section-head,
+          .stat .value
+        ) {
+        font-family: "Avenir Next Condensed", "Arial Narrow", sans-serif;
+        font-stretch: condensed;
+        text-transform: uppercase;
+        letter-spacing: 1.4px;
+      }
+      :root[data-theme^="lcars"] .hero h1 {
+        color: var(--lo);
+        letter-spacing: 3px;
+      }
+      :root[data-theme^="lcars"] .hero {
+        border-bottom: 12px solid var(--ll);
+        border-bottom-left-radius: 36px;
+        padding-bottom: 18px;
+      }
+      :root[data-theme^="lcars"] .sidebar {
+        border-right: 0;
+        border-left: 22px solid var(--lo);
+        border-top: 56px solid var(--lo);
+        border-top-left-radius: 64px;
+      }
+      :root[data-theme^="lcars"] .mark {
+        background: #000;
+        color: var(--lg);
+        border: 3px solid var(--lo);
+        border-radius: 50%;
+      }
+      :root[data-theme^="lcars"] .brand strong {
+        color: var(--lo);
+      }
+      :root[data-theme^="lcars"] .nav button {
+        background: var(--lp);
+        color: var(--lp-on);
+        font-weight: 700;
+        border-radius: 0 22px 22px 0;
+        margin-bottom: 5px;
+      }
+      :root[data-theme^="lcars"] .nav button:nth-child(5n + 2) {
+        background: var(--ll);
+        color: var(--ll-on);
+      }
+      :root[data-theme^="lcars"] .nav button:nth-child(5n + 3) {
+        background: var(--lb);
+        color: var(--lb-on);
+      }
+      :root[data-theme^="lcars"] .nav button:nth-child(5n + 4) {
+        background: var(--lt);
+        color: var(--lt-on);
+      }
+      :root[data-theme^="lcars"] .nav button:nth-child(5n) {
+        background: var(--lg);
+        color: var(--lg-on);
+      }
+      :root[data-theme^="lcars"] .nav button[aria-current="page"],
+      :root[data-theme^="lcars"] .nav button:hover {
+        background: var(--lo);
+        color: var(--lo-on);
+      }
+      :root[data-theme^="lcars"] .nav :is(.icon, kbd) {
+        color: inherit;
+      }
+      :root[data-theme^="lcars"] .stat {
+        background: #000;
+        border: 0;
+        border-left: 16px solid var(--lo);
+        border-radius: 26px 0 0 26px;
+      }
+      :root[data-theme^="lcars"] .stat:nth-child(2) {
+        border-left-color: var(--ll);
+      }
+      :root[data-theme^="lcars"] .stat:nth-child(3) {
+        border-left-color: var(--lb);
+      }
+      :root[data-theme^="lcars"] .stat:nth-child(4) {
+        border-left-color: var(--lr);
+      }
+      :root[data-theme^="lcars"] .panel {
+        background: #000;
+        border: 0;
+        border-top: 10px solid var(--lp);
+        border-left: 10px solid var(--lp);
+        border-radius: 30px 0 0 0;
+      }
+      :root[data-theme^="lcars"] .section-head {
+        border-bottom: 3px solid var(--lo);
+        border-bottom-right-radius: 12px;
+        padding-bottom: 6px;
+      }
+      :root[data-theme^="lcars"] .section-head h2 {
+        color: var(--lp);
+      }
+      :root[data-theme^="lcars"] .column {
+        background: #000;
+        border: 0;
+        border-top: 8px solid var(--lo);
+        border-radius: 18px 18px 0 0;
+      }
+      :root[data-theme^="lcars"] .column:nth-child(5n + 2) {
+        border-top-color: var(--lg);
+      }
+      :root[data-theme^="lcars"] .column:nth-child(5n + 3) {
+        border-top-color: var(--ll);
+      }
+      :root[data-theme^="lcars"] .column:nth-child(5n + 4) {
+        border-top-color: var(--lr);
+      }
+      :root[data-theme^="lcars"] .column:nth-child(5n) {
+        border-top-color: var(--lb);
+      }
+      :root[data-theme^="lcars"] .task {
+        border: 0;
+        border-left: 6px solid var(--lt);
+        border-radius: 0 12px 12px 0;
+      }
+      :root[data-theme^="lcars"] .avatar {
+        background: var(--lb);
+        color: var(--lb-on);
+        border-radius: 14px;
+      }
+      :root[data-theme^="lcars"] .agent-name {
+        color: var(--lg);
+      }
+      :root[data-theme^="lcars"] .pill {
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      :root[data-theme^="lcars"] .attention-card {
+        border-left: 8px solid var(--lr);
+        border-radius: 0 18px 18px 0;
+      }
+      :root[data-theme^="lcars"] .footer {
+        border-top: 12px solid var(--lo);
+        border-bottom-right-radius: 36px;
+      }
+      :root[data-theme^="lcars"] .dot {
+        background: var(--lg);
+        box-shadow: 0 0 6px var(--lg);
+      }
+      :root[data-theme="lcars-movie"] {
+        --lo: #4a5aa8;
+        --lo-on: #fff;
+        --lp: #4192d0;
+        --lp-on: #000;
+        --ll: #0e8441;
+        --ll-on: #fff;
+        --lb: #9fc6ea;
+        --lb-on: #000;
+        --lr: #f8d235;
+        --lr-on: #000;
+        --lg: #ffffff;
+        --lg-on: #000;
+        --lt: #8a8a8a;
+        --lt-on: #000;
+      }
+      :root[data-theme="lcars-lcars"] {
+        --lo: #ff9c00;
+        --lo-on: #000;
+        --lp: #ffb37a;
+        --lp-on: #000;
+        --ll: #cc99ff;
+        --ll-on: #000;
+        --lb: #9fb4ff;
+        --lb-on: #000;
+        --lr: #ff5c5c;
+        --lr-on: #000;
+        --lg: #ffcc66;
+        --lg-on: #000;
+        --lt: #d6a66b;
+        --lt-on: #000;
+      }
+      :root[data-theme="lcars-tng"] {
+        --lo: #f7992b;
+        --lo-on: #000;
+        --lp: #d29d6c;
+        --lp-on: #000;
+        --ll: #9e6b9e;
+        --ll-on: #000;
+        --lb: #d3d0e6;
+        --lb-on: #000;
+        --lr: #d96262;
+        --lr-on: #000;
+        --lg: #fbc964;
+        --lg-on: #000;
+        --lt: #b1a43a;
+        --lt-on: #000;
+      }
+      :root[data-theme="lcars-blue"] {
+        --lo: #2b59a8;
+        --lo-on: #fff;
+        --lp: #4e6fb8;
+        --lp-on: #fff;
+        --ll: #9ac6e6;
+        --ll-on: #000;
+        --lb: #1f4287;
+        --lb-on: #fff;
+        --lr: #c3dcf0;
+        --lr-on: #000;
+        --lg: #6f93d3;
+        --lg-on: #000;
+        --lt: #7f8a99;
+        --lt-on: #000;
+      }
+      :root[data-theme="lcars-grey"] {
+        --lo: #888888;
+        --lo-on: #000;
+        --lp: #a8a8a8;
+        --lp-on: #000;
+        --ll: #cfcfcf;
+        --ll-on: #000;
+        --lb: #6e6e6e;
+        --lb-on: #fff;
+        --lr: #e6e6e6;
+        --lr-on: #000;
+        --lg: #b8b8b8;
+        --lg-on: #000;
+        --lt: #9a9a9a;
+        --lt-on: #000;
+      }
+      :root[data-theme="lcars-yellow"] {
+        --lo: #fba922;
+        --lo-on: #000;
+        --lp: #fcd667;
+        --lp-on: #000;
+        --ll: #cd8a30;
+        --ll-on: #000;
+        --lb: #99692b;
+        --lb-on: #fff;
+        --lr: #f58a2a;
+        --lr-on: #000;
+        --lg: #ffe08a;
+        --lg-on: #000;
+        --lt: #6b4a1e;
+        --lt-on: #fff;
+      }
+      :root[data-theme="lcars-red"] {
+        --lo: #ec2227;
+        --lo-on: #000;
+        --lp: #f39495;
+        --lp-on: #000;
+        --ll: #cc2129;
+        --ll-on: #fff;
+        --lb: #9a1e22;
+        --lb-on: #fff;
+        --lr: #ff3b3b;
+        --lr-on: #000;
+        --lg: #f6b0b0;
+        --lg-on: #000;
+        --lt: #5f0d10;
+        --lt-on: #fff;
+      }
+      :root[data-theme="lcars-sto"] {
+        --lo: #2f56a6;
+        --lo-on: #fff;
+        --lp: #9cdcf8;
+        --lp-on: #000;
+        --ll: #e3cd52;
+        --ll-on: #000;
+        --lb: #72757a;
+        --lb-on: #fff;
+        --lr: #f0703a;
+        --lr-on: #000;
+        --lg: #c7e9fb;
+        --lg-on: #000;
+        --lt: #4a3b1d;
+        --lt-on: #fff;
+      }
+      :root[data-theme="lcars-klingon"] {
+        --lo: #ec2227;
+        --lo-on: #000;
+        --lp: #f26b26;
+        --lp-on: #000;
+        --ll: #efe81e;
+        --ll-on: #000;
+        --lb: #156f37;
+        --lb-on: #fff;
+        --lr: #3ab55a;
+        --lr-on: #000;
+        --lg: #ff8a50;
+        --lg-on: #000;
+        --lt: #3a3a3a;
+        --lt-on: #fff;
+      }
+      :root[data-theme="lcars-romulan"] {
+        --lo: #2fb889;
+        --lo-on: #000;
+        --lp: #6bc187;
+        --lp-on: #000;
+        --ll: #f19ac3;
+        --ll-on: #000;
+        --lb: #3399d4;
+        --lb-on: #000;
+        --lr: #49c49f;
+        --lr-on: #000;
+        --lg: #1a6a3a;
+        --lg-on: #fff;
+        --lt: #346a3a;
+        --lt-on: #fff;
+      }
+      :root[data-theme="lcars-gorn"] {
+        --lo: #2bb673;
+        --lo-on: #000;
+        --lp: #6dc386;
+        --lp-on: #000;
+        --ll: #a8a9ad;
+        --ll-on: #000;
+        --lb: #ffffff;
+        --lb-on: #000;
+        --lr: #f7941d;
+        --lr-on: #000;
+        --lg: #7a4e2b;
+        --lg-on: #fff;
+        --lt: #1a6a3a;
+        --lt-on: #fff;
+      }
     </style>
   </head>
   <body>
@@ -1044,7 +1390,20 @@
           ><select id="theme">
             <option value="system">◐ System</option>
             <option value="light">Light</option>
-            <option value="dark">Dark</option></select
+            <option value="dark">Dark</option>
+            <optgroup label="Star Trek">
+              <option value="lcars-movie">Movie Era</option>
+              <option value="lcars-lcars">LCARS</option>
+              <option value="lcars-tng">TNG</option>
+              <option value="lcars-blue">Blue Alert</option>
+              <option value="lcars-grey">Grey Alert</option>
+              <option value="lcars-yellow">Yellow Alert</option>
+              <option value="lcars-red">Red Alert</option>
+              <option value="lcars-sto">Star Trek Online</option>
+              <option value="lcars-klingon">Klingon</option>
+              <option value="lcars-romulan">Romulan</option>
+              <option value="lcars-gorn">Gorn</option>
+            </optgroup></select
           ><button id="refresh" class="primary" title="Refresh observations">
             ↻
           </button>

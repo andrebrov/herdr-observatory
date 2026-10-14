@@ -83,6 +83,11 @@ export async function main() {
       path: "docs/screenshots/overview-dark.png",
       fullPage: true,
     });
+    await page.selectOption("#theme", "lcars-movie");
+    await page.screenshot({
+      path: "docs/screenshots/overview-lcars.png",
+      fullPage: true,
+    });
     await page.selectOption("#theme", "light");
     await page.screenshot({
       path: "docs/screenshots/overview-light.png",
