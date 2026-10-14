@@ -54,4 +54,4 @@ The native `Focus pane` command and external macOS `open` action were not execut
 
 A second isolated npm exec check installed the committed, unbuilt source through a local Git URL. npm ran source preparation and built the CLI before executing all five demo stages. Generated dist/ files remain uncommitted.
 
-The documented GitHub runner targets gAmUssA/herdr-observatory. That public endpoint has not been exercised before publication; local package installation is verified, and remote accessibility is a prerequisite rather than a claimed result.
+The public repository was published at https://github.com/gAmUssA/herdr-observatory on 2026-10-14. The exact documented GitHub npm exec command, with `--demo --snapshot`, passed from an empty directory using a fresh isolated npm cache: all five board states, one evidence-bound accepted assignment, and zero source diagnostics. GitHub visibility was PUBLIC and the remote main SHA matched the local pushed head. No application CI workflow is configured; local verification and the public source runner are the recorded application checks.

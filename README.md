@@ -10,7 +10,7 @@ Use [Node.js 22+ with npm](https://nodejs.org/), macOS, and an existing [Xcode C
 
 ## Run without a checkout
 
-Once this repository is available on GitHub, run the demo from any directory:
+Run the demo from any directory:
 
 ```sh
 npm exec --yes --package='github:gAmUssA/herdr-observatory#main' -- \
@@ -19,7 +19,7 @@ npm exec --yes --package='github:gAmUssA/herdr-observatory#main' -- \
 
 npm fetches the source into its execution cache, installs the build dependencies, runs the prepare/build lifecycle, and exposes the compiled executable. You do not need to clone the repository yourself or install a global command. First launch needs network access and can take longer while Glimpse prepares its native host. The repository remains marked private for npm publishing; this command uses GitHub directly and needs no npm registry release. Replace `main` with a known commit SHA or tag to pin the source revision.
 
-The GitHub command requires the repository and selected ref to be accessible. Before the initial push, use the local build instructions below. npm's [execution](https://docs.npmjs.com/cli/v11/commands/npm-exec/) and [lifecycle](https://docs.npmjs.com/cli/v11/using-npm/scripts/) documentation describes the cache and source preparation behavior.
+The GitHub command requires the repository and selected ref to be accessible. To work on the source, use the local build instructions below. npm's [execution](https://docs.npmjs.com/cli/v11/commands/npm-exec/) and [lifecycle](https://docs.npmjs.com/cli/v11/using-npm/scripts/) documentation describes the cache and source preparation behavior.
 
 Close the window or press Ctrl-C in the launching terminal to stop. Demo data is synthetic, uses a fixed observation clock, and never calls Herdr. Restarting restores the fixture view; the dashboard does not modify fixtures.
 
@@ -49,7 +49,7 @@ herdr --session default api snapshot
 
 Use the exact existing session name from the list. These commands inspect Herdr; the dashboard does not start, attach, or provision a session. In these instructions, Herdr is the CLI executable (`herdr`, not `herd`).
 
-From any directory, after the GitHub repository is available:
+From any directory:
 
 ```sh
 npm exec --yes --package='github:gAmUssA/herdr-observatory#main' -- \
