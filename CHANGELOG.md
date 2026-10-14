@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0 — 2026-10-14
+
+- Render evidence and ledger Markdown with tables, nested/task lists, emphasis, block quotes, code blocks, frontmatter metadata, safe indexed-evidence links, and a Rendered/Source toggle. Keep raw HTML and remote embeds inert (ADR 0004).
+
 ## 0.1.0 — 2026-10-14
 
 - Add a compiled executable and GitHub source runner via npm exec, with local build/session connection instructions and self-contained AGENTS.md guidance (ADR 0003).

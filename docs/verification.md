@@ -55,3 +55,13 @@ The native `Focus pane` command and external macOS `open` action were not execut
 A second isolated npm exec check installed the committed, unbuilt source through a local Git URL. npm ran source preparation and built the CLI before executing all five demo stages. Generated dist/ files remain uncommitted.
 
 The public repository was published at https://github.com/gAmUssA/herdr-observatory on 2026-10-14. The exact documented GitHub npm exec command, with `--demo --snapshot`, passed from an empty directory using a fresh isolated npm cache: all five board states, one evidence-bound accepted assignment, and zero source diagnostics. GitHub visibility was PUBLIC and the remote main SHA matched the local pushed head. No application CI workflow is configured; local verification and the public source runner are the recorded application checks.
+
+## Rich Markdown evidence
+
+The Markdown update passed `npm run verify` with 44 tests across five files. Parser regressions cover headings, emphasis, nested and ordered lists, block quotes, tables/alignment, read-only task markers, literal fenced code, inert HTML/JavaScript URLs, unfetched image references, exact indexed-evidence links, literal frontmatter, size limits, and excessive token complexity. Local-file validation remains available when a preview exceeds the token budget.
+
+The browser check passed formatted/source toggling, rich table and task structure, safe linked evidence navigation, rendered ledger context, light/dark appearances, modal focus wrapping, live drawer isolation, and zero remote requests. Updated [light evidence](screenshots/evidence-light.png) and [dark evidence](screenshots/evidence-dark.png) screenshots show the implemented renderer.
+
+A real Glimpse/WKWebView window opened the synthetic design report through the normal evidence bridge. Native DOM checks confirmed three table rows, three task markers, and zero script, image-embed, or navigation-link elements in the report. [Native Markdown screenshot](screenshots/native-markdown.png) records that window. Validation read synthetic fixtures only; CueGlass files, reports, sessions, and supervision state were not changed.
+
+A clean `npm ci` built the compiled CLI, and `npm run package:check` passed with 19 runtime files, including the Markdown module and production parser dependency. The source-based runner keeps the same command and explicit project/state/session flags.

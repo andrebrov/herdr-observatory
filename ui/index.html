@@ -810,6 +810,190 @@
           transition: background 0.15s;
         }
       }
+      .markdown {
+        font-size: 13px;
+        line-height: 1.8;
+        overflow-wrap: anywhere;
+        color: var(--text);
+      }
+      .markdown h1,
+      .markdown h2,
+      .markdown h3,
+      .markdown h4,
+      .markdown h5,
+      .markdown h6 {
+        line-height: 1.35;
+        letter-spacing: -0.4px;
+        margin: 1.5em 0 0.65em;
+        font-weight: 650;
+      }
+      .markdown h1 {
+        font-size: 26px;
+      }
+      .markdown h2 {
+        font-size: 20px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 8px;
+      }
+      .markdown h3 {
+        font-size: 16px;
+      }
+      .markdown h4,
+      .markdown h5,
+      .markdown h6 {
+        font-size: 13px;
+      }
+      .markdown > :first-child {
+        margin-top: 16px;
+      }
+      .markdown p {
+        margin: 0.7em 0 1em;
+      }
+      .markdown ul,
+      .markdown ol {
+        padding-left: 24px;
+        margin: 0.7em 0 1em;
+      }
+      .markdown li {
+        margin: 0.3em 0;
+      }
+      .markdown li p {
+        margin: 0.3em 0;
+      }
+      .markdown blockquote {
+        border-left: 3px solid var(--accent);
+        margin: 16px 0;
+        padding: 4px 16px;
+        color: var(--muted);
+        background: var(--accent-bg);
+        border-radius: 0 6px 6px 0;
+      }
+      .markdown code {
+        font:
+          11px/1.7 ui-monospace,
+          SFMono-Regular,
+          monospace;
+        background: var(--sidebar);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 2px 5px;
+      }
+      .markdown pre {
+        position: relative;
+        background: var(--sidebar);
+        border: 1px solid var(--line);
+        padding: 16px;
+        border-radius: 8px;
+        overflow: auto;
+        white-space: pre;
+        margin: 16px 0;
+        overflow-wrap: normal;
+      }
+      .markdown pre[data-language] {
+        padding-top: 34px;
+      }
+      .markdown pre[data-language]::before {
+        content: attr(data-language);
+        position: absolute;
+        top: 9px;
+        left: 16px;
+        color: var(--muted);
+        font:
+          10px -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        letter-spacing: 0.5px;
+      }
+      .markdown pre code {
+        padding: 0;
+        border: 0;
+        background: none;
+        font-size: 11px;
+      }
+      .markdown hr {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 24px 0;
+      }
+      .markdown-table {
+        overflow-x: auto;
+        margin: 16px 0;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .markdown table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 12px;
+      }
+      .markdown th,
+      .markdown td {
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        vertical-align: top;
+      }
+      .markdown th {
+        background: var(--sidebar);
+        font-weight: 600;
+      }
+      .markdown tr:last-child td {
+        border-bottom: 0;
+      }
+      .markdown .align-center {
+        text-align: center;
+      }
+      .markdown .align-right {
+        text-align: right;
+      }
+      .markdown-reference {
+        color: var(--accent);
+      }
+      .markdown-reference-url {
+        color: var(--muted);
+        font-size: 11px;
+      }
+      .markdown-evidence-link {
+        color: var(--accent);
+        padding: 0;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-align: left;
+      }
+      .markdown li.markdown-task {
+        list-style: none;
+        position: relative;
+      }
+      .task-check {
+        position: absolute;
+        left: -23px;
+        top: 0;
+        color: var(--accent);
+        font-size: 15px;
+      }
+      .markdown-task > p {
+        display: inline;
+      }
+      .markdown strong {
+        font-weight: 650;
+      }
+      #ledger-context > .markdown {
+        padding: 18px;
+      }
+      .markdown-toolbar {
+        display: flex;
+        gap: 6px;
+        margin: 18px 0 6px;
+      }
+      .markdown-toolbar button[aria-pressed="true"] {
+        background: var(--accent-bg);
+        border-color: var(--accent);
+        font-weight: 600;
+      }
+      .markdown-toolbar button[aria-pressed="false"] {
+        background: transparent;
+        color: var(--muted);
+      }
     </style>
   </head>
   <body>
@@ -988,6 +1172,98 @@
           const list = data.evidence.filter((e) => t.evidence.includes(e.id));
           for (const e of list) body.append(evidenceButton(e, "drawer"));
           if (!list.length) body.append(empty("No bound evidence available."));
+        }
+        function markdownView(nodes) {
+          const article = node("article", "markdown");
+          const allowed = new Set([
+            "p",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "strong",
+            "em",
+            "s",
+            "blockquote",
+            "ul",
+            "ol",
+            "li",
+            "pre",
+            "code",
+            "hr",
+            "br",
+            "table",
+            "thead",
+            "tbody",
+            "tr",
+            "th",
+            "td",
+            "span",
+          ]);
+          function append(parent, items) {
+            for (const item of items) {
+              if (item.kind === "text") {
+                parent.append(document.createTextNode(item.text));
+                continue;
+              }
+              if (item.kind !== "element" || !allowed.has(item.tag)) continue;
+              const el = node(item.tag);
+              if (item.start && item.tag === "ol") el.start = item.start;
+              if (["left", "center", "right"].includes(item.align))
+                el.classList.add("align-" + item.align);
+              if (item.language && item.tag === "pre")
+                el.dataset.language = item.language;
+              if (typeof item.checked === "boolean" && item.tag === "li") {
+                el.classList.add("markdown-task");
+                const check = node(
+                  "span",
+                  "task-check",
+                  item.checked ? "☑" : "☐",
+                );
+                check.setAttribute("role", "img");
+                check.setAttribute(
+                  "aria-label",
+                  item.checked ? "Completed task" : "Open task",
+                );
+                el.append(check);
+              }
+              if (item.reference !== undefined) {
+                const evidence = data.evidence.find(
+                  (e) => e.id === item.evidenceId,
+                );
+                if (evidence) {
+                  const b = button("", "markdown-evidence-link", () =>
+                    showEvidence(evidence),
+                  );
+                  append(b, item.children);
+                  b.title = "Open indexed evidence: " + evidence.path;
+                  el.append(b);
+                } else {
+                  el.classList.add("markdown-reference");
+                  append(el, item.children);
+                  el.append(
+                    node(
+                      "span",
+                      "markdown-reference-url",
+                      " (" + item.reference + ")",
+                    ),
+                  );
+                }
+              } else append(el, item.children);
+              if (item.tag === "table") {
+                const wrap = node("div", "markdown-table");
+                wrap.tabIndex = 0;
+                wrap.setAttribute("role", "region");
+                wrap.setAttribute("aria-label", "Report table");
+                wrap.append(el);
+                parent.append(wrap);
+              } else parent.append(el);
+            }
+          }
+          append(article, nodes);
+          return article;
         }
         function showEvidence(e) {
           selectedEvidence = e.id;
@@ -1436,7 +1712,9 @@
                   "source-row",
                   "TASK-LEDGER.md · narrative context",
                 ),
-                node("pre", "source-row", data.ledger),
+                data.ledgerMarkdown
+                  ? markdownView(data.ledgerMarkdown)
+                  : node("pre", "source-row", data.ledger),
               );
               root.append(section("Task ledger", "Not used for status", d));
             }
@@ -1534,27 +1812,28 @@
               img.alt = payload.title;
               body.append(img);
             } else {
-              if (payload.path.endsWith(".md")) {
-                let code = false,
-                  block = null;
-                for (const line of payload.text.split("\n")) {
-                  if (line.startsWith("```")) {
-                    code = !code;
-                    block = code ? node("pre") : null;
-                    if (block) body.append(block);
-                    continue;
-                  }
-                  if (code) {
-                    block.textContent += line + "\n";
-                    continue;
-                  }
-                  const heading = /^(#{1,3}) (.*)/.exec(line);
-                  body.append(
-                    heading
-                      ? node("h" + (heading[1].length + 1), "", heading[2])
-                      : node("div", "", line || "\u00a0"),
+              if (payload.markdown) {
+                const toolbar = node("div", "markdown-toolbar"),
+                  content = node("div");
+                const rendered = button("Rendered", "primary", () => {
+                  content.replaceChildren(markdownView(payload.markdown));
+                  rendered.setAttribute("aria-pressed", "true");
+                  source.setAttribute("aria-pressed", "false");
+                });
+                const source = button("Source", "primary", () => {
+                  content.replaceChildren(
+                    node("pre", "markdown-source", payload.text),
                   );
-                }
+                  source.setAttribute("aria-pressed", "true");
+                  rendered.setAttribute("aria-pressed", "false");
+                });
+                rendered.setAttribute("aria-pressed", "true");
+                source.setAttribute("aria-pressed", "false");
+                toolbar.setAttribute("role", "group");
+                toolbar.setAttribute("aria-label", "Report appearance");
+                toolbar.append(rendered, source);
+                content.append(markdownView(payload.markdown));
+                body.append(toolbar, content);
               } else body.append(node("pre", "", payload.text));
             }
           },

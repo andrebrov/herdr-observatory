@@ -102,7 +102,7 @@ This prints JSON-only stdout. `npm run start:built` adds npm's script banner. Pa
 - **Assignment board:** queued, running, awaiting verification, blocked, and accepted. Each card opens its assessment, provenance, evidence, and recorded commit reference. This board tracks assignments; it does not manufacture task-wide completion.
 - **Activity:** dispatches, supervision observations, findings, corrections, attention events, and resolutions, sorted by event time with sequence tie-breaks.
 - **Operator attention:** open and deferred obligations replayed from the owner's append-only history. Viewing never records presentation, acknowledgement, or resolution.
-- **Evidence:** safe Markdown headings and code blocks, plain test/log output, image previews, recorded digests, and commit references. Raw HTML and report scripts remain inert text. Markdown links and embedded resources are not fetched.
+- **Evidence:** rich Markdown headings, nested lists, read-only task markers, tables, emphasis, block quotes, and labelled fenced code blocks; plain test/log output, image previews, recorded digests, and commit references. Toggle **Rendered / Source** to inspect original Markdown. YAML frontmatter appears as literal metadata. Raw HTML and report scripts remain inert text. Links to already-indexed local evidence open in the viewer; other URLs and embedded images remain text references and are never fetched.
 - **Sources:** exact paths, read times, file modification times, errors, and saved watcher heartbeat status. A fresh heartbeat does not establish process identity or supervision health by itself.
 
 Choose system, light, or dark appearance in the toolbar. Tab through controls; `/` focuses search, `1`–`5` changes views, and Escape closes the evidence drawer. Live DOM updates preserve retained controls, focus, scroll position, and expanded ledger context using [morphdom](https://github.com/patrick-steele-idem/morphdom).
@@ -127,7 +127,7 @@ npm run verify
 npm run package:check
 ```
 
-The test suite covers normalization, chronological ordering, freshness, explicit acceptance, changed evidence, schema failures, attention replay, session mismatch, path and symlink boundaries, inert content, image signatures, bridge serialization, and bounded polling. Tests use temporary files and controlled clocks. The packaging smoke check packs the compiled CLI, runs it through npm exec from an empty directory, verifies all five demo states and UI asset resolution, rejects missing live paths, and checks that development artifacts are excluded.
+The test suite covers normalization, chronological ordering, freshness, explicit acceptance, changed evidence, schema failures, attention replay, session mismatch, path and symlink boundaries, inert content, image signatures, bridge serialization, and bounded polling. Tests use temporary files and controlled clocks. Markdown regressions also cover hostile HTML/URLs, literal code, tables, task lists, safe evidence links, and bounded document complexity. The packaging smoke check packs the compiled CLI, runs it through npm exec from an empty directory, verifies all five demo states and UI asset resolution, rejects missing live paths, and checks that development artifacts are excluded.
 
 The browser interaction check runs the exact HTML and installed local morphdom asset used by Glimpse:
 

@@ -21,6 +21,7 @@ Herdr Observatory is a standalone, local, observational dashboard. Its native sh
 
 ## Keep content and actions safe
 
+- Render Markdown through src/markdown.ts and its restricted document tree; build known DOM elements with text nodes. Keep raw HTML disabled and image/unknown URL references inert. Only indexed evidence IDs may make a report link actionable.
 - Render foreign strings with textContent. Do not inject report HTML, event text, or paths into innerHTML or executable JavaScript. morphdom is a patcher, not a sanitizer.
 - Keep the fixed Glimpse bridge receiver and JSON serialization boundary. Validate all incoming actions against configured projects, sessions, known evidence, and live identities; never expose arbitrary shell execution.
 - Canonicalize evidence roots and reject symlink escapes, unsupported types, oversized files, and invalid image signatures. Revalidate evidence and pane identities when actions run.

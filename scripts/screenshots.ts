@@ -5,6 +5,7 @@ import { resolve } from "node:path";
 import assert from "node:assert/strict";
 import { Adapter, type Config } from "../src/adapter.js";
 import { dashboardHTML } from "../src/presentation.js";
+import { markdownDocument } from "../src/markdown.js";
 import { evidencePayload } from "../src/actions.js";
 export async function main() {
   const project = resolve("fixtures/demo");
@@ -16,7 +17,15 @@ export async function main() {
     evidenceRoots: [],
     ledger: resolve(project, "TASK-LEDGER.md"),
   };
-  const dashboard = await new Adapter(config).snapshot(project, "Demo session");
+  const snapshot = await new Adapter(config).snapshot(project, "Demo session");
+  const dashboard = {
+    ...snapshot,
+    ledgerMarkdown: markdownDocument(
+      snapshot.ledger,
+      config.ledger,
+      snapshot.evidence,
+    ),
+  };
   const html = await dashboardHTML();
   const browser = await chromium.launch({
     headless: true,
@@ -125,6 +134,10 @@ export async function main() {
       dashboard,
     );
     assert.equal(
+      await page.locator("#ledger-context article.markdown h1").count(),
+      1,
+    );
+    assert.equal(
       await page.locator("#ledger-context").getAttribute("open"),
       "",
     );
@@ -156,13 +169,55 @@ export async function main() {
       path: "docs/screenshots/evidence-light.png",
       fullPage: true,
     });
-    await page.keyboard.press("Tab");
+    assert.equal(
+      await page.locator("#drawer-body article.markdown h1").textContent(),
+      "Observatory design review",
+    );
+    assert.equal(
+      await page.locator("#drawer-body .markdown table tbody tr").count(),
+      3,
+    );
+    assert.equal(
+      await page.locator("#drawer-body .markdown strong").first().textContent(),
+      "evidence",
+    );
+    assert.equal(await page.locator("#drawer-body .markdown-task").count(), 3);
+    assert.equal(
+      await page.locator("#drawer-body .markdown blockquote").count(),
+      1,
+    );
     assert.equal(
       await page
-        .locator("#drawer-bottom button")
-        .evaluate((e) => e === document.activeElement),
-      true,
+        .locator('#drawer-body pre[data-language="typescript"] code')
+        .count(),
+      1,
     );
+    assert.equal(
+      await page
+        .locator("#drawer-body img,#drawer-body a[href],#drawer-body script")
+        .count(),
+      0,
+    );
+    await page.getByRole("button", { name: "Source", exact: true }).click();
+    assert.match(
+      (await page.locator("#drawer-body .markdown-source").textContent()) ?? "",
+      /\|\s*Check\s*\|\s*Observation\s*\|\s*Assessment\s*\|/,
+    );
+    await page.getByRole("button", { name: "Rendered", exact: true }).click();
+    // The app is inert while the modal is open; set appearance directly for the modal capture.
+    await page.evaluate(() => {
+      document.documentElement.dataset.theme = "dark";
+      (document.getElementById("theme") as HTMLSelectElement).value = "dark";
+    });
+    await page.screenshot({
+      path: "docs/screenshots/evidence-dark.png",
+      fullPage: true,
+    });
+    await page.evaluate(() => {
+      document.documentElement.dataset.theme = "light";
+      (document.getElementById("theme") as HTMLSelectElement).value = "light";
+    });
+    await page.locator("#drawer-bottom button").focus();
     await page.keyboard.press("Tab");
     assert.equal(
       await page
@@ -170,6 +225,25 @@ export async function main() {
         .evaluate((e) => e === document.activeElement),
       true,
     );
+    await page.keyboard.press("Shift+Tab");
+    assert.equal(
+      await page
+        .locator("#drawer-bottom button")
+        .evaluate((e) => e === document.activeElement),
+      true,
+    );
+    await page
+      .getByRole("button", { name: "test results", exact: true })
+      .click();
+    await page
+      .locator("#drawer-title")
+      .filter({ hasText: "test-results.txt" })
+      .waitFor();
+    await page
+      .getByText("Synthetic test artifact — not an actual test run", {
+        exact: false,
+      })
+      .waitFor();
     await page.keyboard.press("Escape");
     assert.equal(await page.locator("#drawer").isHidden(), true);
     await page.locator("#search").focus();
@@ -214,7 +288,7 @@ export async function main() {
     assert.deepEqual(errors, []);
     assert.deepEqual(remote, []);
     console.log(
-      "UI checks passed: light/dark rendering, inert reports and titles, focus trap, Escape, keyboard views, search, zero remote requests, morphdom node/focus/scroll retention, updated handlers, expanded ledger, isolated viewer. Screenshots written to docs/screenshots.",
+      "UI checks passed: light/dark rendering, inert reports and titles, focus trap, Escape, keyboard views, search, rich Markdown, source toggle, safe evidence links, zero remote requests, morphdom node/focus/scroll retention, updated handlers, expanded ledger, isolated viewer. Screenshots written to docs/screenshots.",
     );
   } finally {
     await browser.close();

@@ -1,3 +1,4 @@
+import { markdownDocument } from "./markdown.js";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { execFile } from "node:child_process";
@@ -29,6 +30,7 @@ export async function evidencePayload(
   id: string,
   dashboard: Dashboard,
   config: Config,
+  includeMarkdown = true,
 ) {
   const evidence = dashboard.evidence.find((e) => e.id === id);
   if (!evidence) throw Error("Unknown evidence reference");
@@ -81,6 +83,10 @@ export async function evidencePayload(
     title: evidence.title,
     ...observation,
     text: bytes.toString("utf8"),
+    markdown:
+      includeMarkdown && extension === ".md"
+        ? markdownDocument(bytes.toString("utf8"), path, dashboard.evidence)
+        : undefined,
   };
 }
 export async function handleAction(
@@ -97,7 +103,7 @@ export async function handleAction(
       payload: await evidencePayload(id, dashboard, config),
     };
   if (action === "openEvidence") {
-    const payload = await evidencePayload(id, dashboard, config);
+    const payload = await evidencePayload(id, dashboard, config, false);
     if (process.platform !== "darwin")
       throw Error("Open local file is currently supported on macOS");
     await exec("/usr/bin/open", [payload.path], { timeout: 3000 });

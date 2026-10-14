@@ -1,3 +1,4 @@
+import { markdownDocument } from "./markdown.js";
 import { parseArgs } from "node:util";
 import { dashboardHTML } from "./presentation.js";
 import { resolve, dirname } from "node:path";
@@ -106,7 +107,22 @@ export async function main() {
         selectedSession === session
       ) {
         dashboard = result;
-        win.send(bridgeCall("snapshot", result));
+        let ledgerMarkdown;
+        try {
+          ledgerMarkdown = markdownDocument(
+            result.ledger,
+            config.ledger,
+            result.evidence,
+          );
+        } catch (error) {
+          ledgerMarkdown = undefined;
+          result.diagnostics.push(
+            error instanceof Error
+              ? error.message
+              : "Ledger Markdown preview unavailable",
+          );
+        }
+        win.send(bridgeCall("snapshot", { ...result, ledgerMarkdown }));
       }
     } finally {
       refreshing = false;

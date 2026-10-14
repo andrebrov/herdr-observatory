@@ -261,3 +261,32 @@ it("limits shared assignment, attention, event and evidence history by exact tas
   ).toBe(false);
   expect(d.evidence.some((e) => e.title === "design-notes.md")).toBe(false);
 });
+
+it("keeps local-file validation available when a Markdown preview exceeds its token budget", async () => {
+  const dir = await mkdtemp(resolve(tmpdir(), "observatory-markdown-limit-"));
+  try {
+    const d = await new Adapter(config).snapshot(demo, "default");
+    d.project = dir;
+    const path = resolve(dir, "complex.md"),
+      text = "- item\n".repeat(30_000);
+    await writeFile(path, text);
+    d.evidence = [
+      {
+        id: "complex",
+        path,
+        title: "complex.md",
+        kind: "md",
+        integrity: "unbound",
+      },
+    ];
+    await expect(evidencePayload("complex", d, config)).rejects.toThrow(
+      "too complex",
+    );
+    expect(await evidencePayload("complex", d, config, false)).toHaveProperty(
+      "text",
+      text,
+    );
+  } finally {
+    await rm(dir, { recursive: true });
+  }
+});

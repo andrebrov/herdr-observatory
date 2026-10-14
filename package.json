@@ -1,6 +1,6 @@
 {
   "name": "herdr-observatory",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Read-only native observatory for Herdr coding sessions",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "glimpseui": "0.8.1",
+    "markdown-it": "15.0.2",
     "morphdom": "2.7.8"
   },
   "devDependencies": {
