@@ -14,6 +14,8 @@ The browser check produced:
 
 These are browser renderings of the implemented UI, not native-window captures. Playwright's matching browser was not installed; the existing Chrome executable was used explicitly. No browser or system tool was installed globally.
 
+A fresh local clone also passed `npm ci` and `npx tsx src/cli.ts --demo --snapshot`. The relocated fixtures produced all five stages, exactly one evidence-bound accepted assignment, and no diagnostics. The installed native Glimpse executable was present. The temporary clone was removed after validation.
+
 ## Native launch
 
 `npm run demo` opened the Swift/WKWebView Glimpse window and printed:
