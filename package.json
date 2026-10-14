@@ -1,0 +1,36 @@
+{
+  "name": "herdr-observatory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Read-only native observatory for Herdr coding sessions",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "tsx src/cli.ts",
+    "demo": "tsx src/cli.ts --demo",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "screenshots": "tsx scripts/screenshots.ts",
+    "lint": "eslint src scripts eslint.config.mjs",
+    "verify": "npm run format:check && npm run lint && npm run check && npm test"
+  },
+  "dependencies": {
+    "glimpseui": "0.8.1",
+    "morphdom": "2.7.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.5",
+    "eslint": "10.12.0",
+    "playwright": "1.64.0",
+    "prettier": "3.9.10",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.4"
+  }
+}

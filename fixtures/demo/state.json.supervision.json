@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "state_path": "$DEMO/state.json",
+  "binding": null,
+  "members": [
+    {
+      "schema_version": 1,
+      "id": "demo-0",
+      "at": "2026-10-14T05:02:00Z",
+      "assignment": {
+        "id": "demo-0",
+        "agent": "atlas",
+        "task": "Read-only data adapter",
+        "report": "$DEMO/reports/adapter-review.md",
+        "pane_id": "w1:p1",
+        "native_session": {
+          "kind": "id",
+          "value": "demo-session-0"
+        }
+      },
+      "active": false,
+      "observed": {
+        "report": {
+          "present": true
+        },
+        "lifecycle": {
+          "status": "idle"
+        }
+      },
+      "resolution": {
+        "schema_version": 1,
+        "at": "2026-10-14T05:26:00Z",
+        "outcome": "accepted",
+        "evidence": [
+          {
+            "schema_version": 1,
+            "path": "$DEMO/reports/adapter-review.md",
+            "sha256": "e797079007421b5bca62212ab881cc637a038953ab0e518ef4a1b54fe77a0308",
+            "size": 422
+          },
+          {
+            "schema_version": 1,
+            "path": "$DEMO/reports/test-results.txt",
+            "sha256": "04194bbd7c2c9543b21c9fc56a5ca138eba006062fe227f7f1a2d05610346576",
+            "size": 259
+          }
+        ]
+      },
+      "refinements": []
+    },
+    {
+      "schema_version": 1,
+      "id": "demo-1",
+      "at": "2026-10-14T05:12:00Z",
+      "assignment": {
+        "id": "demo-1",
+        "agent": "nova",
+        "task": "Native dashboard surfaces",
+        "report": "$DEMO/reports/design-notes.md",
+        "pane_id": "w1:p2",
+        "native_session": {
+          "kind": "id",
+          "value": "demo-session-1"
+        }
+      },
+      "active": true,
+      "observed": {
+        "report": {
+          "present": true
+        },
+        "lifecycle": {
+          "status": "idle"
+        }
+      },
+      "resolution": null,
+      "refinements": []
+    },
+    {
+      "schema_version": 1,
+      "id": "demo-2",
+      "at": "2026-10-14T05:18:00Z",
+      "assignment": {
+        "id": "demo-2",
+        "agent": "sage",
+        "task": "Acceptance & freshness tests",
+        "report": "$DEMO/reports/test-results.txt",
+        "pane_id": "w1:p3",
+        "native_session": {
+          "kind": "id",
+          "value": "demo-session-2"
+        }
+      },
+      "active": true,
+      "observed": {
+        "report": {
+          "present": false
+        },
+        "lifecycle": {
+          "status": "working"
+        }
+      },
+      "resolution": null,
+      "refinements": []
+    },
+    {
+      "schema_version": 1,
+      "id": "demo-3",
+      "at": "2026-10-14T05:21:00Z",
+      "assignment": {
+        "id": "demo-3",
+        "agent": "ember",
+        "task": "Session history policy",
+        "report": "$DEMO/reports/test-results.txt",
+        "pane_id": "w1:p4",
+        "native_session": {
+          "kind": "id",
+          "value": "demo-session-3"
+        }
+      },
+      "active": true,
+      "observed": {
+        "report": {
+          "present": false
+        },
+        "lifecycle": {
+          "status": "blocked"
+        }
+      },
+      "resolution": null,
+      "refinements": []
+    },
+    {
+      "schema_version": 1,
+      "id": "demo-4",
+      "at": "2026-10-14T05:25:00Z",
+      "assignment": {
+        "id": "demo-4",
+        "agent": "quill",
+        "task": "Launch guide & architecture",
+        "report": "$DEMO/reports/test-results.txt",
+        "pane_id": "w1:p5",
+        "native_session": {
+          "kind": "id",
+          "value": "demo-session-4"
+        }
+      },
+      "active": true,
+      "observed": {
+        "report": {
+          "present": false
+        },
+        "lifecycle": {
+          "status": "idle"
+        }
+      },
+      "resolution": null,
+      "refinements": []
+    }
+  ],
+  "events": [
+    {
+      "schema_version": 1,
+      "id": "event-1",
+      "seq": 1,
+      "kind": "dispatch_observed",
+      "member": "demo-2",
+      "at": "2026-10-14T05:18:00Z",
+      "data": {
+        "agent": "sage",
+        "role": "tester"
+      }
+    },
+    {
+      "schema_version": 1,
+      "id": "event-2",
+      "seq": 2,
+      "kind": "report_observed",
+      "member": "demo-1",
+      "at": "2026-10-14T05:24:00Z",
+      "data": {
+        "report": "design-notes.md",
+        "acceptance": "unverified"
+      }
+    },
+    {
+      "schema_version": 1,
+      "id": "event-3",
+      "seq": 3,
+      "kind": "finding_observed",
+      "member": "demo-2",
+      "at": "2026-10-14T05:27:00Z",
+      "data": {
+        "finding": "Idle must never imply accepted"
+      }
+    },
+    {
+      "schema_version": 1,
+      "id": "event-4",
+      "seq": 4,
+      "kind": "correction_observed",
+      "member": "demo-2",
+      "at": "2026-10-14T05:28:00Z",
+      "data": {
+        "correction": "Separate elapsed time from observed freshness"
+      }
+    },
+    {
+      "schema_version": 1,
+      "id": "event-5",
+      "seq": 5,
+      "kind": "blocker_observed",
+      "member": "demo-3",
+      "at": "2026-10-14T05:29:00Z",
+      "data": {
+        "blocker": "Retention policy needs an operator decision"
+      }
+    }
+  ],
+  "acknowledgements": [],
+  "holds": [],
+  "watchers": [
+    {
+      "schema_version": 1,
+      "id": "demo-watch",
+      "at": "2026-10-14T05:30:00Z",
+      "heartbeat": "2026-10-14T05:30:00Z",
+      "deadline": "2026-10-14T06:00:00Z",
+      "status": "running",
+      "process": {
+        "pid": 1234,
+        "identity": "synthetic"
+      }
+    }
+  ]
+}

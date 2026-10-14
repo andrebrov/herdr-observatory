@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "state_path": "$DEMO/state.json",
+  "events": [
+    {
+      "schema_version": 1,
+      "event_id": "record:review",
+      "at": "2026-10-14T05:24:00Z",
+      "action": "record",
+      "data": {
+        "id": "review",
+        "task": "Native dashboard surfaces",
+        "kind": "review",
+        "title": "Design report is ready for review",
+        "context": "Nova delivered the first layout and keyboard navigation notes. The report is available; acceptance is still unverified.",
+        "resolution_condition": "Inspect design-notes.md and record assessment through the lead.",
+        "priority": 40,
+        "sources": []
+      }
+    },
+    {
+      "schema_version": 1,
+      "event_id": "record:retention",
+      "at": "2026-10-14T05:29:00Z",
+      "action": "record",
+      "data": {
+        "id": "retention",
+        "task": "Session history policy",
+        "kind": "decision",
+        "title": "How long should session history stay?",
+        "context": "The history adapter is waiting on a retention policy. Choose 7 or 30 days before implementation continues.",
+        "resolution_condition": "Answer in the Herdr lead pane. This dashboard never records your decision.",
+        "priority": 20,
+        "sources": []
+      }
+    }
+  ]
+}

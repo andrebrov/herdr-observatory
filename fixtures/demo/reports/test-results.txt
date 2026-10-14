@@ -1,0 +1,8 @@
+Synthetic test artifact — not an actual test run
+
+Normalization suite: 12 passed
+Freshness suite: 5 passed
+Acceptance suite: 8 passed
+
+Commit reference: 7c91c06e4981a197cabf0bfa3027dd70b5c70f32
+Head verification: recorded for this synthetic assignment only

@@ -1,0 +1,63 @@
+{
+  "result": {
+    "snapshot": {
+      "agents": [
+        {
+          "name": "atlas",
+          "agent": "codex",
+          "pane_id": "w1:p1",
+          "cwd": "$DEMO",
+          "agent_session": {
+            "kind": "id",
+            "value": "demo-session-0"
+          },
+          "agent_status": "idle"
+        },
+        {
+          "name": "nova",
+          "agent": "codex",
+          "pane_id": "w1:p2",
+          "cwd": "$DEMO",
+          "agent_session": {
+            "kind": "id",
+            "value": "demo-session-1"
+          },
+          "agent_status": "idle"
+        },
+        {
+          "name": "sage",
+          "agent": "codex",
+          "pane_id": "w1:p3",
+          "cwd": "$DEMO",
+          "agent_session": {
+            "kind": "id",
+            "value": "demo-session-2"
+          },
+          "agent_status": "working"
+        },
+        {
+          "name": "ember",
+          "agent": "codex",
+          "pane_id": "w1:p4",
+          "cwd": "$DEMO",
+          "agent_session": {
+            "kind": "id",
+            "value": "demo-session-3"
+          },
+          "agent_status": "blocked"
+        },
+        {
+          "name": "quill",
+          "agent": "codex",
+          "pane_id": "w1:p5",
+          "cwd": "$DEMO",
+          "agent_session": {
+            "kind": "id",
+            "value": "demo-session-4"
+          },
+          "agent_status": "idle"
+        }
+      ]
+    }
+  }
+}
